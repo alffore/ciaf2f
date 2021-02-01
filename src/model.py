@@ -4,7 +4,6 @@
 # alffore@gmail.com
 
 
-import time
 import math
 import torch
 import torch.nn as nn
@@ -68,10 +67,3 @@ class PositionalEncoding(nn.Module):
         return self.dropout(x)
 
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-
-if __name__ == '__main__':
-    start = time.perf_counter()
-
-    print(f'Termino en {round(time.perf_counter() - start, 2)} segundos')
