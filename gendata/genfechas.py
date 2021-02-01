@@ -1,7 +1,6 @@
-
-
 import random
 import datetime
+import time
 
 lmeses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre',
           'noviembre', 'diciembre']
@@ -134,4 +133,35 @@ def genfecharand3():
 
 if __name__ == '__main__':
 
-    for _ in range(1000000):
+    start = time.perf_counter()
+    with open('../data/fechas_train.csv', "w") as wf:
+        wf.write('fecha,fi\n')
+        for _ in range(1000000):
+            nmodo = random.randint(0, 1E10)
+
+            if nmodo % 4 == 0:
+                fecha, fi = genfecharand()
+            elif nmodo % 4 == 1:
+                fecha, fi = genfecharandi()
+            elif nmodo % 4 == 2:
+                fecha, fi = genfecharand2()
+            else:
+                fecha, fi = genfecharand3()
+            wf.write(f'{fecha},{fi}\n')
+
+    with open('../data/fechas_test.csv', "w") as wf:
+        wf.write('fecha,fi\n')
+        for _ in range(250000):
+            nmodo = random.randint(0, 1E10)
+
+            if nmodo % 4 == 0:
+                fecha, fi = genfecharand()
+            elif nmodo % 4 == 1:
+                fecha, fi = genfecharandi()
+            elif nmodo % 4 == 2:
+                fecha, fi = genfecharand2()
+            else:
+                fecha, fi = genfecharand3()
+            wf.write(f'{fecha},{fi}\n')
+
+    print(f'Termino en {round(time.perf_counter() - start, 2)} segundos')
