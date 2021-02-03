@@ -3,8 +3,42 @@ import torch
 import torch.nn as nn
 
 import model
+import dataset as ds
+
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+train_data,vocab =  ds.recuperaDatosVocab('../data/fechas_train.csv')
+
+train_data,train_target = ds.data_process(train_data,vocab)
+
+
+def batchify(data, bsz):
+    # Divide the dataset into bsz parts.
+    nbatch = data.size(0) // bsz
+    # Trim off any extra elements that wouldn't cleanly fit (remainders).
+    data = data.narrow(0, 0, nbatch * bsz)
+    # Evenly divide the data across the bsz batches.
+    data = data.view(bsz, -1).t().contiguous()
+    return data.to(device)
+
+
+batch_size = 20
+eval_batch_size = 10
+train_data = batchify(train_data, batch_size)
+train_target = batchify(train_target, batch_size)
+bptt = 35
+
+print(train_data)
+print(train_target)
+exit(0)
+
+
+def get_batch(source, i):
+    seq_len = min(bptt, len(source) - 1 - i)
+    data = source[i:i + seq_len]
+    target = source[i + 1:i + 1 + seq_len].reshape(-1)
+    return data, target
 
 
 ntokens = len(vocab.stoi)  # the size of vocabulary
@@ -12,7 +46,7 @@ emsize = 200  # embedding dimension
 nhid = 200  # the dimension of the feedforward network model in nn.TransformerEncoder
 nlayers = 2  # the number of nn.TransformerEncoderLayer in nn.TransformerEncoder
 nhead = 2  # the number of heads in the multihead attention models
-dropout = 0.2  # the dropout value
+dropout = 0.1  # the dropout value
 model = model.TransformerModel(ntokens, emsize, nhead, nhid, nlayers, dropout).to(device)
 
 criterion = nn.CrossEntropyLoss()
