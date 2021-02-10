@@ -7,8 +7,10 @@ lmeses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agost
 
 lmesesi = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november',
            'december']
-a_min=1600
-a_max=2500
+
+a_min = 1600
+a_max = 5500
+
 
 def validafecha(fecha):
     """
@@ -30,7 +32,7 @@ def validafecha(fecha):
 def genfecharand():
     bgen = True
 
-    asep = ['de', 'del', ' ', '-', '/', ':']
+    asep = ['de', 'del', ' ', '-', '/', ':', "#", "\\", '"', '']
 
     while bgen:
         nmes = random.randint(0, 11)
@@ -113,7 +115,7 @@ def genfecharand3():
 
     nformat = random.randint(0, 1E6)
 
-    lsep = ['-', '/', ' ', "\\"]
+    lsep = ['-', '/', ' ', "\\", '']
 
     while bgen:
         nmes = random.randint(1, 12)
@@ -131,15 +133,16 @@ def genfecharand3():
             diaf = dia
 
         sep = random.choice(lsep)
+        sep1 = random.choice(lsep)
 
         if nformat % 5 == 0:
-            fecha = f'{anno}{sep}{nmesf}{sep}{diaf}'
+            fecha = f'{anno}{sep}{nmesf}{sep1}{diaf}'
         elif nformat % 5 == 1:
-            fecha = f'{diaf}{sep}{nmesf}{sep}{anno}'
+            fecha = f'{diaf}{sep}{nmesf}{sep1}{anno}'
         elif nformat % 5 == 2:
-            fecha = f'{nmesf}{sep}{diaf}{sep}{anno}'
+            fecha = f'{nmesf}{sep}{diaf}{sep1}{anno}'
         elif nformat % 5 == 3:
-            fecha = f'{nmesf}{sep}{nmesf}{sep}{anno}'
+            fecha = f'{nmesf}{sep}{nmesf}{sep1}{anno}'
         else:
             fecha = f'{nmesf}\\{nmesf}\\{anno}'
 
@@ -205,8 +208,8 @@ def mutacadena(cadena):
 if __name__ == '__main__':
     print("Generador de fechas aleatorias")
 
-    ntrain = 500000
-    ntest = 200000
+    ntrain = 1000000
+    ntest = 100000
     max_length = 0
 
     start = time.perf_counter()
