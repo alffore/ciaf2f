@@ -1,21 +1,28 @@
 import dataset as ds
-import torchtext.vocab as vocab
+import time
+import random
 
-datos, v = ds.recuperaDatosVocab('../data/fechas_test.csv')
+start = time.perf_counter()
+
+pairs, v = ds.recuperaDatosVocab('../data/fechas_train.csv')
 print(v.itos)
+print(f'cantidad de simbolos: {len(v.itos)}')
 print(dict(v.stoi))
+print(v.freqs)
 
 # fechas normales
 print(ds.data_process_single('2 de febrero del 2021', v))
-# print(ds.data_process_single('2021-02-02', v))
 
 # fecha con problema
 print(ds.data_process_single('2 de febrerow del 2021', v))
 
+# fecha convertida
+print(ds.data_process_single('2021-02-02', v))
 
-# procesamos todos los datos
+# tensor from pair
+print(ds.tensorFromPair(v,['2 de febrerow del 2021', '2021-02-02']))
 
-tdata_in, tdata_out = ds.data_process(datos, v)
+print('Pares:')
+print(random.choice(pairs))
 
-print(tdata_in)
-print(tdata_out)
+print(f'Termino en {round(time.perf_counter() - start, 2)} segundos')

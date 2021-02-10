@@ -3,20 +3,38 @@ import torchtext.vocab as vocab
 import pandas as pd
 import collections as col
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-def recuperaDatosVocab(archivo_csv):
-    datos = pd.read_csv(archivo_csv)
 
+def recuperaVocab(archivo_csv):
+    datos = pd.read_csv(archivo_csv, sep=',', quotechar='"')
     lista = []
+
     for index in range(len(datos)):
         d = datos.values[index]
-        d = d[0] + d[1]
+        d = str(d[0]) + str(d[1])
+
         for i in range(len(d)):
             lista.append(d[i])
 
-    counter = col.Counter(lista)
+    return vocab.Vocab(col.Counter(lista), min_freq=1, specials=('<sos>', '<eos>', '<unk>'))
 
-    return datos, vocab.Vocab(counter, min_freq=1)
+
+def recuperaDatosVocab(archivo_csv):
+    datos = pd.read_csv(archivo_csv, sep=',', quotechar='"')
+    # datos = pd.read_csv(archivo_csv)
+
+    lista = []
+    pairs = []
+    for index in range(len(datos)):
+        d = datos.values[index]
+        pairs.append([d[0], d[1]])
+        d = str(d[0]) + str(d[1])
+
+        for i in range(len(d)):
+            lista.append(d[i])
+
+    return pairs, vocab.Vocab(col.Counter(lista), min_freq=1, specials=('<sos>', '<eos>', '<unk>'))
 
 
 def data_process_single(sfecha, vocab):
@@ -27,31 +45,27 @@ def data_process_single(sfecha, vocab):
     :return:
     """
     toklist = []
-    for i in range(len(sfecha)):
+    for i in range(len(str(sfecha))):
         toklist.append(sfecha[i])
+    toklist.append('<eos>')
 
     return torch.tensor([vocab[token] for token in toklist], dtype=torch.long)
-    # return torch.cat(tuple(filter(lambda t: t.numel() > 0, data)))
 
 
-def data_process(pdfechas, vocab):
-    """
+def indexFromSentence(vocab, sentence):
+    toklist = []
+    for i in range(len(str(sentence))):
+        toklist.append(sentence[i])
+    toklist.append('<eos>')
+    return [vocab[token] for token in toklist]
 
-    :type DataSet: pdfechas:
-    :type vocab: object
-    """
-    lista_in = []
-    lista_out = []
-    for index in range(len(pdfechas)):
-        d = pdfechas.values[index]
 
-        lista_in.append(data_process_single(d[0], vocab))
-        lista_out.append(data_process_single(d[1], vocab))
+def tensorFromSentence(vocab, sentence):
+    return torch.tensor(indexFromSentence(vocab, sentence), dtype=torch.long, device=device).view(-1, 1)
 
-    # data_in = torch.cat(tuple(filter(lambda t: t.numel() > 0, lista_in)))
-    # data_out = torch.cat(tuple(filter(lambda t: t.numel() > 0, lista_out)))
 
-    data_in = torch.cat(tuple(lista_in))
-    data_out = torch.cat(tuple(lista_out))
+def tensorFromPair(vocab, pair):
+    input_tensor = tensorFromSentence(vocab, pair[0])
+    out_tensor = tensorFromSentence(vocab, pair[1])
+    return input_tensor, out_tensor
 
-    return data_in, data_out

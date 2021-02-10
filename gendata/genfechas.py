@@ -7,9 +7,15 @@ lmeses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agost
 
 lmesesi = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november',
            'december']
-
+a_min=1600
+a_max=2500
 
 def validafecha(fecha):
+    """
+
+    :param fecha:
+    :return:
+    """
     year, month, day = fecha.split('-')
 
     isvaliddate = True
@@ -24,6 +30,8 @@ def validafecha(fecha):
 def genfecharand():
     bgen = True
 
+    asep = ['de', 'del', ' ', '-', '/', ':']
+
     while bgen:
         nmes = random.randint(0, 11)
 
@@ -31,9 +39,16 @@ def genfecharand():
         nmes += 1
 
         dia = random.randint(1, 31)
-        anno = random.randint(1900, 2050)
+        diamod = random.choice([dia, "{:0>2d}".format(dia)])
 
-        fecha = f'{dia} de {mes} del {anno}'
+        anno = random.randint(a_min, a_max)
+
+        sep1 = random.choice(asep)
+        sep2 = random.choice(asep)
+
+        fecha = f'{diamod} {sep1} {mes} {sep2} {anno}'
+
+        fecha = mutacadena(fecha)
 
         nmesf = "{:0>2d}".format(nmes)
         diaf = "{:0>2d}".format(dia)
@@ -56,7 +71,9 @@ def genfecharandi():
         nmes += 1
 
         dia = random.randint(1, 31)
-        anno = random.randint(1900, 2050)
+        anno = random.randint(a_min, a_max)
+
+        mes = mutacadena(mes)
 
         fecha = f'{dia} {mes} {anno}'
 
@@ -77,7 +94,7 @@ def genfecharand2():
     while bgen:
         nmes = random.randint(1, 12)
         dia = random.randint(1, 31)
-        anno = random.randint(1900, 2050)
+        anno = random.randint(a_min, a_max)
 
         nmesf = "{:0>2d}".format(nmes)
         diaf = "{:0>2d}".format(dia)
@@ -96,12 +113,12 @@ def genfecharand3():
 
     nformat = random.randint(0, 1E6)
 
-    lsep = ['-', '/', ' ']
+    lsep = ['-', '/', ' ', "\\"]
 
     while bgen:
         nmes = random.randint(1, 12)
         dia = random.randint(1, 31)
-        anno = random.randint(1900, 2050)
+        anno = random.randint(a_min, a_max)
 
         nmesf = "{:0>2d}".format(nmes)
 
@@ -115,12 +132,16 @@ def genfecharand3():
 
         sep = random.choice(lsep)
 
-        if nformat % 3 == 0:
+        if nformat % 5 == 0:
             fecha = f'{anno}{sep}{nmesf}{sep}{diaf}'
-        elif nformat % 3 == 1:
+        elif nformat % 5 == 1:
             fecha = f'{diaf}{sep}{nmesf}{sep}{anno}'
-        else:
+        elif nformat % 5 == 2:
             fecha = f'{nmesf}{sep}{diaf}{sep}{anno}'
+        elif nformat % 5 == 3:
+            fecha = f'{nmesf}{sep}{nmesf}{sep}{anno}'
+        else:
+            fecha = f'{nmesf}\\{nmesf}\\{anno}'
 
         diaf = "{:0>2d}".format(dia)
         fi = f'{anno}-{nmesf}-{diaf}'
@@ -131,37 +152,101 @@ def genfecharand3():
     return fecha, fi
 
 
+def genfecharand4():
+    bgen = True
+
+    while bgen:
+        nmes = random.randint(0, 11)
+
+        mes = lmeses[nmes]
+        mesi = lmesesi[nmes]
+        mes = random.choice([mes, mesi])
+
+        nmes += 1
+
+        dia = random.randint(1, 31)
+        anno = random.randint(a_min, a_max)
+
+        mes = mutacadena(mes)
+
+        fecha = f'{mes} {dia}, {anno}'
+
+        nmesf = "{:0>2d}".format(nmes)
+        diaf = "{:0>2d}".format(dia)
+
+        fi = f'{anno}-{nmesf}-{diaf}'
+
+        if validafecha(fi):
+            bgen = False
+
+    return fecha, fi
+
+
+def mutacadena(cadena):
+    c = random.randint(1, 1E9)
+    aux = []
+    if c % 13 == 0:
+        posm = random.randint(0, len(cadena) - 1)
+        cl = "a1bc(/de2f3gh,i4jk6lm5n7ñop8qr9s.tuvw0xyz )?"
+        cm = cl[random.randint(0, len(cl) - 1)]
+
+        for i in range(len(cadena)):
+            if i == posm:
+                if c % 2 == 0:
+                    aux.append(cm)
+            else:
+                aux.append(cadena[i])
+
+    if len(aux) > 0:
+        cadena = ''.join(aux)
+    return cadena
+
+
 if __name__ == '__main__':
+    print("Generador de fechas aleatorias")
+
+    ntrain = 500000
+    ntest = 200000
+    max_length = 0
 
     start = time.perf_counter()
     with open('../data/fechas_train.csv', "w") as wf:
         wf.write('fecha,fi\n')
-        for _ in range(1000000):
+        for _ in range(ntrain):
             nmodo = random.randint(0, 1E10)
 
-            if nmodo % 4 == 0:
+            if nmodo % 5 == 0:
                 fecha, fi = genfecharand()
-            elif nmodo % 4 == 1:
+            elif nmodo % 5 == 1:
                 fecha, fi = genfecharandi()
-            elif nmodo % 4 == 2:
+            elif nmodo % 5 == 2:
                 fecha, fi = genfecharand2()
-            else:
+            elif nmodo % 5 == 3:
                 fecha, fi = genfecharand3()
-            wf.write(f'{fecha},{fi}\n')
+            else:
+                fecha, fi = genfecharand4()
+
+            wf.write(f'"{fecha}","{fi}"\n')
+            max_length = max(max_length, len(fecha))
 
     with open('../data/fechas_test.csv', "w") as wf:
         wf.write('fecha,fi\n')
-        for _ in range(250000):
+        for _ in range(ntest):
             nmodo = random.randint(0, 1E10)
 
-            if nmodo % 4 == 0:
+            if nmodo % 5 == 0:
                 fecha, fi = genfecharand()
-            elif nmodo % 4 == 1:
+            elif nmodo % 5 == 1:
                 fecha, fi = genfecharandi()
-            elif nmodo % 4 == 2:
+            elif nmodo % 5 == 2:
                 fecha, fi = genfecharand2()
-            else:
+            elif nmodo % 5 == 3:
                 fecha, fi = genfecharand3()
-            wf.write(f'{fecha},{fi}\n')
+            else:
+                fecha, fi = genfecharand4()
 
+            wf.write(f'"{fecha}","{fi}"\n')
+            max_length = max(max_length, len(fecha))
+
+    print(f'Maxima longitud caracteres {max_length}')
     print(f'Termino en {round(time.perf_counter() - start, 2)} segundos')
