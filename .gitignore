@@ -129,3 +129,5 @@ dmypy.json
 .pyre/
 *.csv
 
+modelo/attdecoder.pth.tar
+modelo/encoder.pth.tar

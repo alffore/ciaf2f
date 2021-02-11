@@ -32,7 +32,7 @@ def validafecha(fecha):
 def genfecharand():
     bgen = True
 
-    asep = ['de', 'del', ' ', '-', '/', ':', "#", "\\", '"', '']
+    asep = ['de', 'del', ' ', '-', '/', ':', "#", "\\", '\'', '']
 
     while bgen:
         nmes = random.randint(0, 11)
@@ -115,7 +115,7 @@ def genfecharand3():
 
     nformat = random.randint(0, 1E6)
 
-    lsep = ['-', '/', ' ', "\\", '']
+    lsep = ['-', '/', ' ', "\\", '', '_']
 
     while bgen:
         nmes = random.randint(1, 12)
