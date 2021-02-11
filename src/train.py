@@ -189,24 +189,24 @@ def load_checkpoint(filename, model, optimizer):
 
 if __name__ == "__main__":
     print("Recupera datos, genera vocabulario")
-    pairs, vocab = ds.recuperaDatosVocab('../data/fechas_train.csv')
+    pairs, vocabulario = ds.recuperaDatosVocab('../data/fechas_train.csv')
 
-    encoder1 = enc.EncoderRNN(len(vocab.itos), hidden_size).to(device)
+    encoder1 = enc.EncoderRNN(len(vocabulario.itos), hidden_size).to(device)
 
-    attn_decoder1 = dec.AttnDecoderRNN(hidden_size, len(vocab.itos), dropout_p=0.1).to(device)
+    attn_decoder1 = dec.AttnDecoderRNN(hidden_size, len(vocabulario.itos), dropout_p=0.1).to(device)
 
-    trainItersFechas(encoder1, attn_decoder1, 55000, vocab, print_every=1000)
+    trainItersFechas(encoder1, attn_decoder1, 100000, vocabulario, print_every=1000)
 
     print("Evaluación completa")
-    evaluador.evaluateRandomly(encoder1, attn_decoder1, pairs, vocab)
+    evaluador.evaluateRandomly(encoder1, attn_decoder1, pairs, vocabulario)
 
-    evaluador.evaluateAndShowAttention("1 del agosto de 1973", vocab, encoder1, attn_decoder1)
+    evaluador.evaluateAndShowAttention("1 del agosto de 1973", vocabulario, encoder1, attn_decoder1)
 
-    evaluador.evaluateAndShowAttention("1 de agoso del 1973", vocab, encoder1, attn_decoder1)
+    evaluador.evaluateAndShowAttention("1 de agoso del 1973", vocabulario, encoder1, attn_decoder1)
 
-    evaluador.evaluateAndShowAttention("2 de aagosto del 1973", vocab, encoder1, attn_decoder1)
+    evaluador.evaluateAndShowAttention("2 de aagosto del 1973", vocabulario, encoder1, attn_decoder1)
 
-    evaluador.evaluateAndShowAttention("2 agosto  del 1973", vocab, encoder1, attn_decoder1)
+    evaluador.evaluateAndShowAttention("2 agosto  del 1973", vocabulario, encoder1, attn_decoder1)
 
-    rese = evaluador.evaluatotal('../data/fechas_test.csv', encoder1, attn_decoder1, vocab)
+    rese = evaluador.evaluatotal('../data/fechas_test.csv', encoder1, attn_decoder1, vocabulario)
     print(rese)

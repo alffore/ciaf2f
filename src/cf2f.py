@@ -30,8 +30,8 @@ if __name__ == '__main__':
 
     attn_decoder1 = dec.AttnDecoderRNN(hidden_size, len(vocab.itos)).to(device)
 
-    # print(f'encoder parameters: {len(encoder1.state_dict())}')
-    # print(f'decoder parameters: {len(attn_decoder1.state_dict())}')
+    # print(f'encoder state_dic: {len(encoder1.state_dict())}')
+    # print(f'decoder state_dic: {len(attn_decoder1.state_dict())}')
 
     if path.exists(NOM_ARCH_ENCODER):
         checkpoint = torch.load(NOM_ARCH_ENCODER)
