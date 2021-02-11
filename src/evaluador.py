@@ -94,13 +94,13 @@ def evaluateAndShowAttention(input_sentence, vocabulario, encoder, attn_decoder)
     ploter.showAttention(input_sentence, output_words, attentions)
 
 
-def evaluatotal(archivo_csv, encoder, decoder, vocab, max_length=MAX_LENGTH):
+def evaluatotal(archivo_csv, encoder, decoder, vocabulario, max_length=MAX_LENGTH):
     """
 
     :param archivo_csv:
     :param encoder:
     :param decoder:
-    :param vocab:
+    :param vocabulario:
     :param max_length:
     :return:
     """
@@ -112,9 +112,9 @@ def evaluatotal(archivo_csv, encoder, decoder, vocab, max_length=MAX_LENGTH):
     with torch.no_grad():
         for index in range(len(datos)):
             d = datos.values[index]
-            pair = ds.tensorFromPair(vocab, [d[0], d[1]])
+            pair = ds.tensorFromPair(vocabulario, [d[0], d[1]])
 
-            input_tensor = ds.tensorFromSentence(vocab, d[0])
+            input_tensor = ds.tensorFromSentence(vocabulario, d[0])
             input_length = input_tensor.size()[0]
             encoder_hidden = encoder.initHidden()
 
@@ -143,7 +143,7 @@ def evaluatotal(archivo_csv, encoder, decoder, vocab, max_length=MAX_LENGTH):
                     decoded_words.append('<EOS>')
                     break
                 else:
-                    decoded_words.append(vocab.itos[topi.item()])
+                    decoded_words.append(vocabulario.itos[topi.item()])
 
                 decoder_input = topi.squeeze().detach()
 
