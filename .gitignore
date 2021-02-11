@@ -131,3 +131,4 @@ dmypy.json
 
 modelo/attdecoder.pth.tar
 modelo/encoder.pth.tar
+*.tar
