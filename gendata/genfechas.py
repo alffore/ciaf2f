@@ -5,8 +5,12 @@ import time
 lmeses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre',
           'noviembre', 'diciembre']
 
+lmeses_reducido = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
+
 lmesesi = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november',
            'december']
+
+lmesesi_reducido = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
 
 a_min = 1600
 a_max = 5500
@@ -37,7 +41,10 @@ def genfecharand():
     while bgen:
         nmes = random.randint(0, 11)
 
-        mes = lmeses[nmes]
+        mes = lmeses_reducido[nmes]
+        if random.randint(0, 1E10) % 2 == 0:
+            mes = lmeses[nmes]
+
         nmes += 1
 
         dia = random.randint(1, 31)
@@ -69,7 +76,10 @@ def genfecharandi():
     while bgen:
         nmes = random.randint(0, 11)
 
-        mes = lmesesi[nmes]
+        mes = lmesesi_reducido[nmes]
+        if random.randint(0, 1E10) % 2 == 0:
+            mes = lmesesi[nmes]
+
         nmes += 1
 
         dia = random.randint(1, 31)
