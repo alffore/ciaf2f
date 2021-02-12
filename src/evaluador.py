@@ -109,6 +109,9 @@ def evaluatotal(archivo_csv, encoder, decoder, vocabulario, max_length=MAX_LENGT
     total_entradas = len(datos)
     porexac = 0.0
 
+    encoder.eval()
+    decoder.eval()
+
     with torch.no_grad():
         for index in range(len(datos)):
             d = datos.values[index]
@@ -121,8 +124,7 @@ def evaluatotal(archivo_csv, encoder, decoder, vocabulario, max_length=MAX_LENGT
             encoder_outputs = torch.zeros(max_length, encoder.hidden_size, device=device)
 
             for ei in range(input_length):
-                encoder_output, encoder_hidden = encoder(input_tensor[ei],
-                                                         encoder_hidden)
+                encoder_output, encoder_hidden = encoder(input_tensor[ei], encoder_hidden)
                 encoder_outputs[ei] += encoder_output[0, 0]
 
             decoder_input = torch.tensor([[SOS_token]], device=device)  # SOS

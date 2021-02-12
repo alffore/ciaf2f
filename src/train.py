@@ -106,7 +106,7 @@ def asMinutes(s):
 def timeSince(since, percent):
     now = time.time()
     s = now - since
-    es = s / (percent)
+    es = s / percent
     rs = es - s
     return '%s (- %s)' % (asMinutes(s), asMinutes(rs))
 
@@ -198,15 +198,15 @@ if __name__ == "__main__":
     trainItersFechas(encoder1, attn_decoder1, 100000, vocabulario, print_every=1000)
 
     print("Evaluación completa")
-    evaluador.evaluateRandomly(encoder1, attn_decoder1, pairs, vocabulario)
+    # evaluador.evaluateRandomly(encoder1, attn_decoder1, pairs, vocabulario)
 
-    evaluador.evaluateAndShowAttention("1 del agosto de 1973", vocabulario, encoder1, attn_decoder1)
+    # evaluador.evaluateAndShowAttention("1 del agosto de 1973", vocabulario, encoder1, attn_decoder1)
 
-    evaluador.evaluateAndShowAttention("1 de agoso del 1973", vocabulario, encoder1, attn_decoder1)
+    # evaluador.evaluateAndShowAttention("1 de agoso del 1973", vocabulario, encoder1, attn_decoder1)
 
-    evaluador.evaluateAndShowAttention("2 de aagosto del 1973", vocabulario, encoder1, attn_decoder1)
+    # evaluador.evaluateAndShowAttention("2 de aagosto del 1973", vocabulario, encoder1, attn_decoder1)
 
-    evaluador.evaluateAndShowAttention("2 agosto  del 1973", vocabulario, encoder1, attn_decoder1)
+    # evaluador.evaluateAndShowAttention("2 agosto  del 1973", vocabulario, encoder1, attn_decoder1)
 
     rese = evaluador.evaluatotal('../data/fechas_test.csv', encoder1, attn_decoder1, vocabulario)
     print(rese)
