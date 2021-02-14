@@ -38,7 +38,7 @@ if __name__ == '__main__':
         checkpoint = torch.load(NOM_ARCH_ATTDECODER)
         attn_decoder1.load_state_dict(checkpoint['state_dict'])
 
-    resultado = evaluador.evaluatotal('../data/fechas_test.csv', encoder1, attn_decoder1, vocabulario, MAX_LENGTH)
+    resultado = evaluador.evaluatotal('../data/fechas_test.csv', encoder1, attn_decoder1, vocabulario)
 
     print(f'Porcentaje de aciertos: {resultado}%')
 

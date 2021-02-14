@@ -4,7 +4,6 @@ import time
 from os import path
 
 import dataset as ds
-
 import encoder as enc
 import attdecoder as dec
 
@@ -24,11 +23,11 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 if __name__ == '__main__':
     start = time.perf_counter()
 
-    vocab = ds.recuperaVocab('../data/fechas_train.csv')
+    vocabulario = ds.recuperaVocab('../data/fechas_train.csv')
 
-    encoder1 = enc.EncoderRNN(len(vocab.itos), hidden_size).to(device)
+    encoder1 = enc.EncoderRNN(len(vocabulario.itos), hidden_size).to(device)
 
-    attn_decoder1 = dec.AttnDecoderRNN(hidden_size, len(vocab.itos)).to(device)
+    attn_decoder1 = dec.AttnDecoderRNN(hidden_size, len(vocabulario.itos)).to(device)
 
     if path.exists(NOM_ARCH_ENCODER):
         checkpoint = torch.load(NOM_ARCH_ENCODER)
@@ -45,7 +44,7 @@ if __name__ == '__main__':
         fecha = input('Fecha: ')
         if fecha is None or fecha == '':
             break
-        output_words, attentions = evaluador.evaluate(encoder1, attn_decoder1, fecha, vocab)
+        output_words, attentions = evaluador.evaluate(encoder1, attn_decoder1, fecha, vocabulario)
         output_sentence = ''.join(output_words)
 
         print(f'{fecha} => {output_sentence}')

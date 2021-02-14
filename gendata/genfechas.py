@@ -36,7 +36,7 @@ def validafecha(fecha):
 def genfecharand():
     bgen = True
 
-    asep = ['de', 'del', ' ', '-', '/', ':', "#", "\\", '\'', '']
+    asep = [' de ', ' del ', ' ', '-', '/', ':', "#", "\\", '\'', '']
 
     while bgen:
         nmes = random.randint(0, 11)
@@ -55,7 +55,7 @@ def genfecharand():
         sep1 = random.choice(asep)
         sep2 = random.choice(asep)
 
-        fecha = f'{diamod} {sep1} {mes} {sep2} {anno}'
+        fecha = f'{diamod}{sep1}{mes}{sep2}{anno}'
 
         fecha = mutacadena(fecha)
 
@@ -73,6 +73,8 @@ def genfecharand():
 def genfecharandi():
     bgen = True
 
+    asep = [ ' ', '-', '/', ':', "#", "\\", '\'', '']
+
     while bgen:
         nmes = random.randint(0, 11)
 
@@ -86,8 +88,10 @@ def genfecharandi():
         anno = random.randint(a_min, a_max)
 
         mes = mutacadena(mes)
+        sep1 = random.choice(asep)
+        sep2 = random.choice(asep)
 
-        fecha = f'{dia} {mes} {anno}'
+        fecha = f'{dia}{sep1}{mes}{sep2}{anno}'
 
         nmesf = "{:0>2d}".format(nmes)
         diaf = "{:0>2d}".format(dia)
@@ -137,24 +141,21 @@ def genfecharand3():
         if nformat % 156 == 0:
             nmesf = nmes
 
+        diaf = dia
         if nformat % 497 == 0:
             diaf = "{:0>2d}".format(dia)
-        else:
-            diaf = dia
 
         sep = random.choice(lsep)
         sep1 = random.choice(lsep)
 
-        if nformat % 5 == 0:
+        if nformat % 4 == 0:
             fecha = f'{anno}{sep}{nmesf}{sep1}{diaf}'
-        elif nformat % 5 == 1:
+        elif nformat % 4 == 1:
             fecha = f'{diaf}{sep}{nmesf}{sep1}{anno}'
-        elif nformat % 5 == 2:
+        elif nformat % 4 == 2:
             fecha = f'{nmesf}{sep}{diaf}{sep1}{anno}'
-        elif nformat % 5 == 3:
-            fecha = f'{nmesf}{sep}{nmesf}{sep1}{anno}'
-        else:
-            fecha = f'{nmesf}\\{nmesf}\\{anno}'
+        elif nformat % 4 == 3:
+            fecha = f'{diaf}\\{nmesf}\\{anno}'
 
         diaf = "{:0>2d}".format(dia)
         fi = f'{anno}-{nmesf}-{diaf}'
@@ -167,6 +168,8 @@ def genfecharand3():
 
 def genfecharand4():
     bgen = True
+
+    lsep=[' ','']
 
     while bgen:
         nmes = random.randint(0, 11)
@@ -182,7 +185,10 @@ def genfecharand4():
 
         mes = mutacadena(mes)
 
-        fecha = f'{mes} {dia}, {anno}'
+        sep = random.choice(lsep)
+        sep1 = random.choice(lsep)
+
+        fecha = f'{mes}{sep}{dia},{sep1}{anno}'
 
         nmesf = "{:0>2d}".format(nmes)
         diaf = "{:0>2d}".format(dia)
