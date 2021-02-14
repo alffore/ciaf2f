@@ -2,8 +2,26 @@ import torch
 import torchtext.vocab as vocab
 import pandas as pd
 import collections as col
+import pickle
+from os import path
+
+NOM_ARCH_VOC = "../modelo/vocabulario.pkl"
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+
+def recuperaVocabP(archivo_csv='../data/fechas_train.csv'):
+    """
+
+    :param archivo_csv:
+    :return:
+    """
+    if path.exists(NOM_ARCH_VOC):
+        with open(NOM_ARCH_VOC, "rb") as file:
+            lista = pickle.load(file)
+            return vocab.Vocab(col.Counter(lista), min_freq=1, specials=('<sos>', '<eos>', '<unk>'))
+
+    return recuperaVocab(archivo_csv)
 
 
 def recuperaVocab(archivo_csv):
@@ -21,6 +39,9 @@ def recuperaVocab(archivo_csv):
 
         for i in range(len(d)):
             lista.append(d[i])
+
+    with open(NOM_ARCH_VOC, "wb") as file:
+        pickle.dump(lista, file)
 
     return vocab.Vocab(col.Counter(lista), min_freq=1, specials=('<sos>', '<eos>', '<unk>'))
 
@@ -42,6 +63,9 @@ def recuperaDatosVocab(archivo_csv):
 
         for i in range(len(d)):
             lista.append(d[i])
+
+    with open(NOM_ARCH_VOC, "wb") as file:
+        pickle.dump(lista, file)
 
     return pairs, vocab.Vocab(col.Counter(lista), min_freq=1, specials=('<sos>', '<eos>', '<unk>'))
 

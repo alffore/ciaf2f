@@ -12,6 +12,7 @@ import evaluador
 NOM_ARCH_ENCODER = '../modelo/encoder.pth.tar'
 NOM_ARCH_ATTDECODER = '../modelo/attdecoder.pth.tar'
 
+
 MAX_LENGTH = 27
 SOS_token = 0
 EOS_token = 1
@@ -23,7 +24,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 if __name__ == '__main__':
     start = time.perf_counter()
 
-    vocabulario = ds.recuperaVocab('../data/fechas_train.csv')
+    vocab = ds.recuperaVocabP()
 
     encoder1 = enc.EncoderRNN(len(vocabulario.itos), hidden_size).to(device)
 
@@ -44,7 +45,11 @@ if __name__ == '__main__':
         fecha = input('Fecha: ')
         if fecha is None or fecha == '':
             break
+<<<<<<< HEAD
         output_words, attentions = evaluador.evaluate(encoder1, attn_decoder1, fecha, vocabulario)
+=======
+        output_words, attentions = evaluador.evaluate(encoder1, attn_decoder1, fecha.lower(), vocab)
+>>>>>>> 9b1f60683113bacf4dec23683c6ad0d9a9ccc4c9
         output_sentence = ''.join(output_words)
 
         print(f'{fecha} => {output_sentence}')

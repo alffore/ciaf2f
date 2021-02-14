@@ -133,3 +133,4 @@ modelo/attdecoder.pth.tar
 modelo/encoder.pth.tar
 *.tar
 .DS_Store
+/modelo/vocabulario.pkl

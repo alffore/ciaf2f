@@ -24,8 +24,10 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 if __name__ == '__main__':
     start = time.perf_counter()
 
-    vocabulario = ds.recuperaVocab('../data/fechas_train.csv')
+    print("Carga el vocabulario")
+    vocabulario = ds.recuperaVocabP()
 
+    print("Construye los modelos")
     encoder1 = enc.EncoderRNN(len(vocabulario.itos), hidden_size).to(device)
 
     attn_decoder1 = dec.AttnDecoderRNN(hidden_size, len(vocabulario.itos)).to(device)
@@ -38,6 +40,7 @@ if __name__ == '__main__':
         checkpoint = torch.load(NOM_ARCH_ATTDECODER)
         attn_decoder1.load_state_dict(checkpoint['state_dict'])
 
+    print("Corre rutina de evaluacion")
     resultado = evaluador.evaluatotal('../data/fechas_test.csv', encoder1, attn_decoder1, vocabulario)
 
     print(f'Porcentaje de aciertos: {resultado}%')
