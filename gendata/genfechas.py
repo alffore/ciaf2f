@@ -13,7 +13,7 @@ lmesesi = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'augu
 lmesesi_reducido = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
 
 a_min = 1600
-a_max = 5500
+a_max = 7500
 
 
 def validafecha(fecha):
