@@ -24,8 +24,10 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 if __name__ == '__main__':
     start = time.perf_counter()
 
-    vocab = ds.recuperaVocabP()
+    print('Recupera vocabulario ...')
+    vocabulario = ds.recuperaVocabP()
 
+    print('Construye modelo ...')
     encoder1 = enc.EncoderRNN(len(vocabulario.itos), hidden_size).to(device)
 
     attn_decoder1 = dec.AttnDecoderRNN(hidden_size, len(vocabulario.itos)).to(device)
@@ -41,15 +43,13 @@ if __name__ == '__main__':
     encoder1.eval()
     attn_decoder1.eval()
 
+    print('Estamos listos ...')
     while True:
         fecha = input('Fecha: ')
-        if fecha is None or fecha == '':
+        if fecha is None or fecha == '' or fecha == 'q':
             break
-<<<<<<< HEAD
-        output_words, attentions = evaluador.evaluate(encoder1, attn_decoder1, fecha, vocabulario)
-=======
-        output_words, attentions = evaluador.evaluate(encoder1, attn_decoder1, fecha.lower(), vocab)
->>>>>>> 9b1f60683113bacf4dec23683c6ad0d9a9ccc4c9
+
+        output_words, attentions = evaluador.evaluate(encoder1, attn_decoder1, fecha.lower(), vocabulario)
         output_sentence = ''.join(output_words)
 
         print(f'{fecha} => {output_sentence}')

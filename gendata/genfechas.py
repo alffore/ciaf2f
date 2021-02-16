@@ -55,7 +55,10 @@ def genfecharand():
         sep1 = random.choice(asep)
         sep2 = random.choice(asep)
 
-        fecha = f'{diamod}{sep1}{mes}{sep2}{anno}'
+        fecha = f'{anno}{sep1}{mes}{sep2}{diamod}'
+
+        if random.randint(0, 1E10) % 2 == 0:
+            fecha = f'{diamod}{sep1}{mes}{sep2}{anno}'
 
         fecha = mutacadena(fecha)
 
@@ -73,7 +76,7 @@ def genfecharand():
 def genfecharandi():
     bgen = True
 
-    asep = [ ' ', '-', '/', ':', "#", "\\", '\'', '']
+    asep = [' ', '-', '/', ':', "#", "\\", '\'', '']
 
     while bgen:
         nmes = random.randint(0, 11)
@@ -92,6 +95,9 @@ def genfecharandi():
         sep2 = random.choice(asep)
 
         fecha = f'{dia}{sep1}{mes}{sep2}{anno}'
+
+        if random.randint(0, 1E10) % 2 == 0:
+            fecha = f'{anno}{sep1}{mes}{sep2}{dia}'
 
         nmesf = "{:0>2d}".format(nmes)
         diaf = "{:0>2d}".format(dia)
@@ -169,7 +175,7 @@ def genfecharand3():
 def genfecharand4():
     bgen = True
 
-    lsep=[' ','']
+    lsep = [' ', '']
 
     while bgen:
         nmes = random.randint(0, 11)

@@ -160,7 +160,7 @@ def trainItersFechas(encoder, decoder, niters, vocabulario, print_every=1000, pl
                 print_loss_avg_ant = print_loss_avg
 
             if print_loss_avg_ant > print_loss_avg:
-                print(f'Guarda {(print_loss_avg_ant - print_loss_avg) / print_loss_avg_ant}')
+                print(f'Guarda {(print_loss_avg_ant - print_loss_avg) *100.00/ print_loss_avg_ant}')
                 print_loss_avg_ant = print_loss_avg
                 checkpoint_encoder = {"state_dict": encoder.state_dict(), "optimizer": encoder_optimizer.state_dict(), }
                 save_checkpoint(checkpoint_encoder, filename=NOM_ARCH_ENCODER)
