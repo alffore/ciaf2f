@@ -17,6 +17,7 @@ import attdecoder as dec
 
 import evaluador
 import ploter
+import pickle
 
 teacher_forcing_ratio = 0.5
 
@@ -28,6 +29,7 @@ hidden_size = 256
 
 NOM_ARCH_ENCODER = '../modelo/encoder.pth.tar'
 NOM_ARCH_ATTDECODER = '../modelo/attdecoder.pth.tar'
+NOM_ARCH_LOSS = '../modelo/loss.pkl'
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -140,7 +142,10 @@ def trainItersFechas(encoder, decoder, niters, vocabulario, print_every=1000, pl
     training_pairs = [ds.tensorFromPair(vocabulario, random.choice(pairs)) for i in range(niters)]
     criterion = nn.NLLLoss()
 
-    print_loss_avg_ant = -1
+    print_loss_avg_ant = -1.0
+    if path.exists(NOM_ARCH_LOSS):
+        with open(NOM_ARCH_LOSS, "rb") as file:
+            print_loss_avg_ant=pickle.load(file)
 
     for iter in range(1, niters + 1):
         training_pair = training_pairs[iter - 1]
@@ -166,6 +171,8 @@ def trainItersFechas(encoder, decoder, niters, vocabulario, print_every=1000, pl
                 save_checkpoint(checkpoint_encoder, filename=NOM_ARCH_ENCODER)
                 checkpoint_decoder = {"state_dict": decoder.state_dict(), "optimizer": decoder_optimizer.state_dict(), }
                 save_checkpoint(checkpoint_decoder, filename=NOM_ARCH_ATTDECODER)
+                with open(NOM_ARCH_LOSS, "wb") as file:
+                    pickle.dump(print_loss_avg_ant, file)
 
         if iter % plot_every == 0:
             plot_loss_avg = plot_loss_total / plot_every
@@ -195,7 +202,7 @@ if __name__ == "__main__":
 
     attn_decoder1 = dec.AttnDecoderRNN(hidden_size, len(vocabulario.itos), dropout_p=0.1).to(device)
 
-    trainItersFechas(encoder1, attn_decoder1, 100000, vocabulario, print_every=1000)
+    trainItersFechas(encoder1, attn_decoder1, 200000, vocabulario, print_every=1000)
 
     print("Evaluación completa")
     # evaluador.evaluateRandomly(encoder1, attn_decoder1, pairs, vocabulario)
