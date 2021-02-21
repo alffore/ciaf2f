@@ -226,16 +226,22 @@ def genfecharand5():
 
 def mutacadena(cadena):
     c = random.randint(1, 1E9)
+    cl = "a1bc(/de2f3gh,i4jk6lm5n7ñop8qr9s.tuvw0xyz )?"
+    cm = cl[random.randint(0, len(cl) - 1)]
+    posm = random.randint(0, len(cadena) - 1)
     aux = []
     if c % 13 == 0:
-        posm = random.randint(0, len(cadena) - 1)
-        cl = "a1bc(/de2f3gh,i4jk6lm5n7ñop8qr9s.tuvw0xyz )?"
-        cm = cl[random.randint(0, len(cl) - 1)]
-
         for i in range(len(cadena)):
             if i == posm:
                 if c % 2 == 0:
                     aux.append(cm)
+            else:
+                aux.append(cadena[i])
+    elif c % 13 == 5:
+        for i in range(len(cadena)):
+            if i == posm and c%3 == 0:
+                aux.append(cm)
+                aux.append(cadena[i])
             else:
                 aux.append(cadena[i])
 
