@@ -5,7 +5,7 @@ import dataset as ds
 
 import ploter
 
-MAX_LENGTH = 27
+MAX_LENGTH = 28
 SOS_token = 0
 EOS_token = 1
 hidden_size = 256

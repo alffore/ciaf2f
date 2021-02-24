@@ -7,7 +7,7 @@ import torch.nn.functional as F
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-MAX_LENGTH = 27
+MAX_LENGTH = 28
 
 
 class AttnDecoderRNN(nn.Module):

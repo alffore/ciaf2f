@@ -251,10 +251,10 @@ def mutacadena(cadena):
 
 
 if __name__ == '__main__':
-    print("Generador de fechas aleatorias")
+    print("Generador de fechas aleatorias...")
 
     ntrain = 2000000
-    ntest = 100000
+    ntest = 200000
     max_length = 0
 
     start = time.perf_counter()

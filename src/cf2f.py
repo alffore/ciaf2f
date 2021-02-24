@@ -13,7 +13,7 @@ NOM_ARCH_ENCODER = '../modelo/encoder.pth.tar'
 NOM_ARCH_ATTDECODER = '../modelo/attdecoder.pth.tar'
 
 
-MAX_LENGTH = 27
+MAX_LENGTH = 28
 SOS_token = 0
 EOS_token = 1
 

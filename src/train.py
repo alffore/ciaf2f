@@ -21,7 +21,7 @@ import pickle
 
 teacher_forcing_ratio = 0.5
 
-MAX_LENGTH = 27
+MAX_LENGTH = 28
 SOS_token = 0
 EOS_token = 1
 
@@ -165,7 +165,7 @@ def trainItersFechas(encoder, decoder, niters, vocabulario, print_every=1000, pl
                 print_loss_avg_ant = print_loss_avg
 
             if print_loss_avg_ant > print_loss_avg:
-                print(f'Guarda {(print_loss_avg_ant - print_loss_avg) *100.00/ print_loss_avg_ant}')
+                print(f'Guarda {(print_loss_avg_ant - print_loss_avg) * -100.00/ print_loss_avg_ant}')
                 print_loss_avg_ant = print_loss_avg
                 checkpoint_encoder = {"state_dict": encoder.state_dict(), "optimizer": encoder_optimizer.state_dict(), }
                 save_checkpoint(checkpoint_encoder, filename=NOM_ARCH_ENCODER)
@@ -211,9 +211,9 @@ if __name__ == "__main__":
 
     evaluador.evaluateAndShowAttention("1 de agoso del 1973", vocabulario, encoder1, attn_decoder1)
 
-    # evaluador.evaluateAndShowAttention("2 de aagosto del 1973", vocabulario, encoder1, attn_decoder1)
+    evaluador.evaluateAndShowAttention("2 de aagosto del 1973", vocabulario, encoder1, attn_decoder1)
 
-    # evaluador.evaluateAndShowAttention("2 agosto  del 1973", vocabulario, encoder1, attn_decoder1)
+    evaluador.evaluateAndShowAttention("2 agosto  del 1973", vocabulario, encoder1, attn_decoder1)
 
     rese = evaluador.evaluatotal('../data/fechas_test.csv', encoder1, attn_decoder1, vocabulario)
     print(f'Porcentaje de aciertos: {rese}%')
