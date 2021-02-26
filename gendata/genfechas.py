@@ -225,6 +225,7 @@ def genfecharand5():
 
 
 def mutacadena(cadena):
+
     c = random.randint(1, 1E9)
     cl = "a1bc(/de2f3gh,i4jk6lm5n7ñop8qr9s.tuvw0xyz )?"
     cm = cl[random.randint(0, len(cl) - 1)]
