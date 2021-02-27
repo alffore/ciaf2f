@@ -12,7 +12,7 @@ lmesesi = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'augu
 
 lmesesi_reducido = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
 
-a_min = 1600
+a_min = 1200
 a_max = 7500
 
 
@@ -60,7 +60,8 @@ def genfecharand():
         if random.randint(0, 1E10) % 2 == 0:
             fecha = f'{diamod}{sep1}{mes}{sep2}{anno}'
 
-        fecha = mutacadena(fecha)
+        if random.randint(0, 1E10) % 2 == 0:
+            fecha = mutacadena(fecha)
 
         nmesf = "{:0>2d}".format(nmes)
         diaf = "{:0>2d}".format(dia)
@@ -90,7 +91,9 @@ def genfecharandi():
         dia = random.randint(1, 31)
         anno = random.randint(a_min, a_max)
 
-        mes = mutacadena(mes)
+        if random.randint(0, 1E10) % 2 == 0:
+            mes = mutacadena(mes)
+
         sep1 = random.choice(asep)
         sep2 = random.choice(asep)
 
@@ -225,7 +228,6 @@ def genfecharand5():
 
 
 def mutacadena(cadena):
-
     c = random.randint(1, 1E9)
     cl = "a1bc(/de2f3gh,i4jk6lm5n7ñop8qr9s.tuvw0xyz )?"
     cm = cl[random.randint(0, len(cl) - 1)]
@@ -240,7 +242,7 @@ def mutacadena(cadena):
                 aux.append(cadena[i])
     elif c % 13 == 5:
         for i in range(len(cadena)):
-            if i == posm and c%3 == 0:
+            if i == posm and c % 3 == 0:
                 aux.append(cm)
                 aux.append(cadena[i])
             else:
