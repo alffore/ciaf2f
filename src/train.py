@@ -202,7 +202,7 @@ if __name__ == "__main__":
 
     attn_decoder1 = dec.AttnDecoderRNN(hidden_size, len(vocabulario.itos), dropout_p=0.1).to(device)
 
-    trainItersFechas(encoder1, attn_decoder1, 100000, vocabulario, print_every=1000)
+    trainItersFechas(encoder1, attn_decoder1, 200000, vocabulario, print_every=1000)
 
     print("Evaluación completa ...")
     # evaluador.evaluateRandomly(encoder1, attn_decoder1, pairs, vocabulario)

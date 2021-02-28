@@ -227,6 +227,27 @@ def genfecharand5():
     return fecha, fi
 
 
+def genfecharand6():
+    bgen = True
+
+    while bgen:
+        nmes = random.randint(0, 11)
+        mes = lmeses[nmes]
+        mesi = lmesesi[nmes]
+        mes = random.choice([mes, mesi])
+
+        nmes += 1
+        nmesf = "{:0>2d}".format(nmes)
+        fecha = f'{mes}'
+
+        fi = f'1000-{nmesf}-01'
+
+        if validafecha(fi):
+            bgen = False
+
+    return fecha, fi
+
+
 def mutacadena(cadena):
     c = random.randint(1, 1E9)
     cl = "a1bc(/de2f3gh,i4jk6lm5n7ñop8qr9s.tuvw0xyz )?"
@@ -266,18 +287,20 @@ if __name__ == '__main__':
         for _ in range(ntrain):
             nmodo = random.randint(0, 1E10)
 
-            if nmodo % 6 == 0:
+            if nmodo % 7 == 0:
                 fecha, fi = genfecharand()
-            elif nmodo % 6 == 1:
+            elif nmodo % 7 == 1:
                 fecha, fi = genfecharandi()
-            elif nmodo % 6 == 2:
+            elif nmodo % 7 == 2:
                 fecha, fi = genfecharand2()
-            elif nmodo % 6 == 3:
+            elif nmodo % 7 == 3:
                 fecha, fi = genfecharand3()
-            elif nmodo % 6 == 4:
+            elif nmodo % 7 == 4:
                 fecha, fi = genfecharand4()
-            elif nmodo % 6 == 5:
+            elif nmodo % 7 == 5:
                 fecha, fi = genfecharand5()
+            elif nmodo % 7 == 6:
+                fecha, fi = genfecharand6()
 
             wf.write(f'"{fecha}","{fi}"\n')
             max_length = max(max_length, len(fecha))
@@ -287,18 +310,20 @@ if __name__ == '__main__':
         for _ in range(ntest):
             nmodo = random.randint(0, 1E10)
 
-            if nmodo % 6 == 0:
+            if nmodo % 7 == 0:
                 fecha, fi = genfecharand()
-            elif nmodo % 6 == 1:
+            elif nmodo % 7 == 1:
                 fecha, fi = genfecharandi()
-            elif nmodo % 6 == 2:
+            elif nmodo % 7 == 2:
                 fecha, fi = genfecharand2()
-            elif nmodo % 6 == 3:
+            elif nmodo % 7 == 3:
                 fecha, fi = genfecharand3()
-            elif nmodo % 6 == 4:
+            elif nmodo % 7 == 4:
                 fecha, fi = genfecharand4()
-            elif nmodo % 6 == 5:
+            elif nmodo % 7 == 5:
                 fecha, fi = genfecharand5()
+            elif nmodo % 7 == 6:
+                fecha, fi = genfecharand6()
 
             wf.write(f'"{fecha}","{fi}"\n')
             max_length = max(max_length, len(fecha))
