@@ -139,7 +139,7 @@ def trainItersFechas(encoder, decoder, niters, vocabulario, print_every=1000, pl
     if path.exists(NOM_ARCH_ATTDECODER):
         load_checkpoint(NOM_ARCH_ATTDECODER, decoder, decoder_optimizer)
 
-    training_pairs = [ds.tensorFromPair(vocabulario, random.choice(pairs)) for i in range(2*niters)]
+    training_pairs = [ds.tensorFromPair(vocabulario, random.choice(pairs)) for i in range(niters)]
     criterion = nn.NLLLoss()
 
     print_loss_avg_ant = -1.0
@@ -202,7 +202,7 @@ if __name__ == "__main__":
 
     attn_decoder1 = dec.AttnDecoderRNN(hidden_size, len(vocabulario.itos), dropout_p=0.1).to(device)
 
-    trainItersFechas(encoder1, attn_decoder1, 100000, vocabulario, print_every=1000)
+    trainItersFechas(encoder1, attn_decoder1, 200000, vocabulario, print_every=1000)
 
     print("Evaluación completa ...")
     # evaluador.evaluateRandomly(encoder1, attn_decoder1, pairs, vocabulario)
