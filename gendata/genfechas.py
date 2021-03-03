@@ -89,6 +89,7 @@ def genfecharandi():
         nmes += 1
 
         dia = random.randint(1, 31)
+
         anno = random.randint(a_min, a_max)
 
         if random.randint(0, 1E10) % 2 == 0:
@@ -103,7 +104,10 @@ def genfecharandi():
             fecha = f'{anno}{sep1}{mes}{sep2}{dia}'
 
         nmesf = "{:0>2d}".format(nmes)
+
         diaf = "{:0>2d}".format(dia)
+        if random.randint(0, 1E10) % 2 == 0:
+            diaf = dia
 
         fi = f'{anno}-{nmesf}-{diaf}'
 
@@ -115,6 +119,7 @@ def genfecharandi():
 
 def genfecharand2():
     bgen = True
+    nformat = random.randint(0, 1E6)
 
     while bgen:
         nmes = random.randint(1, 12)
@@ -122,9 +127,13 @@ def genfecharand2():
         anno = random.randint(a_min, a_max)
 
         nmesf = "{:0>2d}".format(nmes)
-        diaf = "{:0>2d}".format(dia)
+
+        diaf = dia
+        if nformat % 7 == 0:
+            diaf = "{:0>2d}".format(dia)
 
         fecha = f'{anno}{nmesf}{diaf}'
+        diaf = "{:0>2d}".format(dia)
         fi = f'{anno}-{nmesf}-{diaf}'
 
         if validafecha(fi):
@@ -145,13 +154,15 @@ def genfecharand3():
         dia = random.randint(1, 31)
         anno = random.randint(a_min, a_max)
 
-        nmesf = "{:0>2d}".format(nmes)
+        nmesf = nmes
+        if nformat % 5 == 1:
+            nmesf = "{:0>2d}".format(nmes)
 
         if nformat % 156 == 0:
             nmesf = nmes
 
         diaf = dia
-        if nformat % 497 == 0:
+        if nformat % 2 == 0:
             diaf = "{:0>2d}".format(dia)
 
         sep = random.choice(lsep)
@@ -167,7 +178,8 @@ def genfecharand3():
             fecha = f'{diaf}\\{nmesf}\\{anno}'
 
         diaf = "{:0>2d}".format(dia)
-        fi = f'{anno}-{nmesf}-{diaf}'
+        nmesf2 = "{:0>2d}".format(nmes)
+        fi = f'{anno}-{nmesf2}-{diaf}'
 
         if validafecha(fi):
             bgen = False
@@ -185,7 +197,9 @@ def genfecharand4():
 
         mes = lmeses[nmes]
         mesi = lmesesi[nmes]
-        mes = random.choice([mes, mesi])
+        mes_r = lmeses_reducido[nmes]
+        mesi_r = lmesesi_reducido[nmes]
+        mes = random.choice([mes, mesi, mes_r, mesi_r])
 
         nmes += 1
 
@@ -237,9 +251,9 @@ def genfecharand6():
         mes = random.choice([mes, mesi])
 
         nmes += 1
-        nmesf = "{:0>2d}".format(nmes)
-        fecha = f'{mes}'
 
+        fecha = f'{mes}'
+        nmesf = "{:0>2d}".format(nmes)
         fi = f'1000-{nmesf}-01'
 
         if validafecha(fi):
