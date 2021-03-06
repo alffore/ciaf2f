@@ -139,7 +139,7 @@ def trainItersFechas(encoder, decoder, niters, vocabulario, print_every=1000, pl
     if path.exists(NOM_ARCH_ATTDECODER):
         load_checkpoint(NOM_ARCH_ATTDECODER, decoder, decoder_optimizer)
 
-    training_pairs = [ds.tensorFromPair(vocabulario, random.choice(pairs)) for i in range(niters)]
+    training_pairs = [ds.tensorFromPair(vocabulario, random.choice(pairs)) for i in range(2*niters)]
     criterion = nn.NLLLoss()
 
     print_loss_avg_ant = -1.0
@@ -200,9 +200,9 @@ if __name__ == "__main__":
 
     encoder1 = enc.EncoderRNN(len(vocabulario.itos), hidden_size).to(device)
 
-    attn_decoder1 = dec.AttnDecoderRNN(hidden_size, len(vocabulario.itos), dropout_p=0.1).to(device)
+    attn_decoder1 = dec.AttnDecoderRNN(hidden_size, len(vocabulario.itos), dropout_p=0.05).to(device)
 
-    trainItersFechas(encoder1, attn_decoder1, 100000, vocabulario, print_every=500)
+    trainItersFechas(encoder1, attn_decoder1, 400000, vocabulario, print_every=500)
 
     print("Evaluación completa ...")
     # evaluador.evaluateRandomly(encoder1, attn_decoder1, pairs, vocabulario)
@@ -223,5 +223,7 @@ if __name__ == "__main__":
 
     evaluador.evaluateAndShowAttention("Dec 12, 2021", vocabulario, encoder1, attn_decoder1)
 
-    rese = evaluador.evaluatotal('../data/fechas_test.csv', encoder1, attn_decoder1, vocabulario)
-    print(f'Porcentaje de aciertos: {rese}%')
+    evaluador.evaluateAndShowAttention("01/06/20", vocabulario, encoder1, attn_decoder1)
+
+    # rese = evaluador.evaluatotal('../data/fechas_test.csv', encoder1, attn_decoder1, vocabulario)
+    # print(f'Porcentaje de aciertos: {rese}%')
