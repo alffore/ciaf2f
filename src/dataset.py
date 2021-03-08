@@ -64,8 +64,8 @@ def recuperaDatosVocab(archivo_csv):
         for i in range(len(d)):
             lista.append(d[i])
 
-    with open(NOM_ARCH_VOC, "wb") as file:
-        pickle.dump(lista, file)
+    # with open(NOM_ARCH_VOC, "wb") as file:
+    #     pickle.dump(lista, file)
 
     return pairs, vocab.Vocab(col.Counter(lista), min_freq=1, specials=('<sos>', '<eos>', '<unk>'))
 

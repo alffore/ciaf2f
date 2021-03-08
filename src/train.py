@@ -139,13 +139,13 @@ def trainItersFechas(encoder, decoder, niters, vocabulario, print_every=1000, pl
     if path.exists(NOM_ARCH_ATTDECODER):
         load_checkpoint(NOM_ARCH_ATTDECODER, decoder, decoder_optimizer)
 
-    training_pairs = [ds.tensorFromPair(vocabulario, random.choice(pairs)) for i in range(2*niters)]
+    training_pairs = [ds.tensorFromPair(vocabulario, random.choice(pairs)) for i in range(2 * niters)]
     criterion = nn.NLLLoss()
 
     print_loss_avg_ant = -1.0
     if path.exists(NOM_ARCH_LOSS):
         with open(NOM_ARCH_LOSS, "rb") as file:
-            print_loss_avg_ant=pickle.load(file)
+            print_loss_avg_ant = pickle.load(file)
 
     for iter in range(1, niters + 1):
         training_pair = training_pairs[iter - 1]
@@ -165,7 +165,7 @@ def trainItersFechas(encoder, decoder, niters, vocabulario, print_every=1000, pl
                 print_loss_avg_ant = print_loss_avg
 
             if print_loss_avg_ant > print_loss_avg:
-                print(f'Guarda {(print_loss_avg_ant - print_loss_avg) * -100.00/ print_loss_avg_ant}')
+                print(f'Guarda {(print_loss_avg_ant - print_loss_avg) * -100.00 / print_loss_avg_ant}')
                 print_loss_avg_ant = print_loss_avg
                 checkpoint_encoder = {"state_dict": encoder.state_dict(), "optimizer": encoder_optimizer.state_dict(), }
                 save_checkpoint(checkpoint_encoder, filename=NOM_ARCH_ENCODER)
