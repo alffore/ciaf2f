@@ -6,13 +6,13 @@ lmeses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agost
           'noviembre', 'diciembre']
 lmeses_reducido = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
 
-# lmesesi = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november',
-#            'december']
-# lmesesi_reducido = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
+lmesesi = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november',
+           'december']
+lmesesi_reducido = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
 
-lmesesi = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre',
-           'noviembre', 'diciembre']
-lmesesi_reducido = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
+# lmesesi = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre',
+#            'noviembre', 'diciembre']
+# lmesesi_reducido = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
 
 a_min = 1200
 a_max = 7500
@@ -174,10 +174,10 @@ def genfecharand3():
             fecha = f'{anno}{sep}{nmesf}{sep1}{diaf}'
         elif nformat % 4 == 1:
             annof = anno
-            if 1921 < annof < 2000 and random.randint(0, 1E6) % 3 == 1:
-                annof = annof - 1900
-            if 2000 <= annof <= 2021 and random.randint(0, 1E6) % 3 == 2:
-                annof = annof - 2000
+            # if 1921 < annof < 2000 and random.randint(0, 1E6) % 3 == 1:
+            #     annof = annof - 1900
+            # if 2000 <= annof <= 2021 and random.randint(0, 1E6) % 3 == 2:
+            #     annof = annof - 2000
             fecha = f'{diaf}{sep}{nmesf}{sep1}{annof}'
         elif nformat % 4 == 2:
             fecha = f'{nmesf}{sep}{diaf}{sep1}{anno}'
