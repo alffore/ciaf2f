@@ -174,10 +174,10 @@ def genfecharand3():
             fecha = f'{anno}{sep}{nmesf}{sep1}{diaf}'
         elif nformat % 4 == 1:
             annof = anno
-            # if 1921 < annof < 2000 and random.randint(0, 1E6) % 3 == 1:
-            #     annof = annof - 1900
-            # if 2000 <= annof <= 2021 and random.randint(0, 1E6) % 3 == 2:
-            #     annof = annof - 2000
+            if 1921 < annof < 2000 and random.randint(0, 1E6) % 3 == 1:
+                annof = annof - 1900
+            if 2000 <= annof <= 2021 and random.randint(0, 1E6) % 3 == 2:
+                annof = annof - 2000
             fecha = f'{diaf}{sep}{nmesf}{sep1}{annof}'
         elif nformat % 4 == 2:
             fecha = f'{nmesf}{sep}{diaf}{sep1}{anno}'
