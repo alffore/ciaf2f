@@ -5,7 +5,7 @@ import collections as col
 import pickle
 from os import path
 
-NOM_ARCH_VOC = "../modelo/vocabulario.pkl"
+NOM_ARCH_VOC = "../modelo/voccol.pkl"
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -18,8 +18,8 @@ def recuperaVocabP(archivo_csv='../data/fechas_train.csv'):
     """
     if path.exists(NOM_ARCH_VOC):
         with open(NOM_ARCH_VOC, "rb") as file:
-            lista = pickle.load(file)
-            return vocab.Vocab(col.Counter(lista), min_freq=1, specials=('<sos>', '<eos>', '<unk>'))
+            coleccion = pickle.load(file)
+            return vocab.Vocab(coleccion, min_freq=1, specials=('<sos>', '<eos>', '<unk>'))
 
     return recuperaVocab(archivo_csv)
 
@@ -40,10 +40,12 @@ def recuperaVocab(archivo_csv):
         for i in range(len(d)):
             lista.append(d[i])
 
-    with open(NOM_ARCH_VOC, "wb") as file:
-        pickle.dump(lista, file)
+    coleccion = col.Counter(lista)
 
-    return vocab.Vocab(col.Counter(lista), min_freq=1, specials=('<sos>', '<eos>', '<unk>'))
+    with open(NOM_ARCH_VOC, "wb") as file:
+        pickle.dump(coleccion, file)
+
+    return vocab.Vocab(coleccion, min_freq=1, specials=('<sos>', '<eos>', '<unk>'))
 
 
 def recuperaDatosVocab(archivo_csv):
@@ -64,10 +66,11 @@ def recuperaDatosVocab(archivo_csv):
         for i in range(len(d)):
             lista.append(d[i])
 
-    # with open(NOM_ARCH_VOC, "wb") as file:
-    #     pickle.dump(lista, file)
+    coleccion = col.Counter(lista)
+    with open(NOM_ARCH_VOC, "wb") as file:
+        pickle.dump(coleccion, file)
 
-    return pairs, vocab.Vocab(col.Counter(lista), min_freq=1, specials=('<sos>', '<eos>', '<unk>'))
+    return pairs, vocab.Vocab(coleccion, min_freq=1, specials=('<sos>', '<eos>', '<unk>'))
 
 
 def data_process_single(sfecha, vocab):
