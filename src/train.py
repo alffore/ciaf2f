@@ -198,11 +198,12 @@ if __name__ == "__main__":
     print("Recupera datos, genera vocabulario ...")
     pairs, vocabulario = ds.recuperaDatosVocab('../data/fechas_train.csv')
 
+    print('Carga modelos ...')
     encoder1 = enc.EncoderRNN(len(vocabulario.itos), hidden_size).to(device)
 
     attn_decoder1 = dec.AttnDecoderRNN(hidden_size, len(vocabulario.itos), dropout_p=0.05).to(device)
 
-    trainItersFechas(encoder1, attn_decoder1, 400000, vocabulario, print_every=500)
+    trainItersFechas(encoder1, attn_decoder1, 200000, vocabulario, print_every=500)
 
     print("Evaluación completa ...")
     # evaluador.evaluateRandomly(encoder1, attn_decoder1, pairs, vocabulario)
