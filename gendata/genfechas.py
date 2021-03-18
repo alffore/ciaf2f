@@ -44,7 +44,7 @@ def genfecharand():
         nmes = random.randint(0, 11)
 
         mes = lmeses_reducido[nmes]
-        if random.randint(0, 1E10) % 2 == 0:
+        if random.randint(0, 1000000) % 2 == 0:
             mes = lmeses[nmes]
 
         nmes += 1
@@ -59,7 +59,7 @@ def genfecharand():
 
         fecha = f'{anno}{sep1}{mes}{sep2}{diamod}'
 
-        if random.randint(0, 1E10) % 2 == 0:
+        if random.randint(0, 1000000) % 2 == 0:
             fecha = f'{diamod}{sep1}{mes}{sep2}{anno}'
 
         if random.randint(0, 1E10) % 2 == 0:
@@ -277,14 +277,14 @@ def mutacadena(cadena):
     cm = cl[random.randint(0, len(cl) - 1)]
     posm = random.randint(0, len(cadena) - 1)
     aux = []
-    if c % 13 == 0:
+    if c % 237 == 0:
         for i in range(len(cadena)):
             if i == posm:
                 if c % 2 == 0:
                     aux.append(cm)
             else:
                 aux.append(cadena[i])
-    elif c % 13 == 5:
+    elif c % 237 == 5:
         for i in range(len(cadena)):
             if i == posm and c % 3 == 0:
                 aux.append(cm)
@@ -297,6 +297,34 @@ def mutacadena(cadena):
     return cadena
 
 
+def guardaarchivo(archivo, cantidad):
+    max_length = 0
+    with open(archivo, "w") as wf:
+        wf.write('fecha,fi\n')
+        for _ in range(cantidad):
+            nmodo = random.randint(0, 10000)
+
+            if nmodo % 7 == 0:
+                fecha, fi = genfecharand()
+            elif nmodo % 7 == 1:
+                fecha, fi = genfecharandi()
+            elif nmodo % 7 == 2:
+                fecha, fi = genfecharand2()
+            elif nmodo % 7 == 3:
+                fecha, fi = genfecharand3()
+            elif nmodo % 7 == 4:
+                fecha, fi = genfecharand4()
+            elif nmodo % 7 == 5:
+                fecha, fi = genfecharand5()
+            elif nmodo % 7 == 6:
+                fecha, fi = genfecharand6()
+
+            wf.write(f'"{fecha}","{fi}"\n')
+            max_length = max(max_length, len(fecha))
+
+    return max_length
+
+
 if __name__ == '__main__':
     print("Generador de fechas aleatorias...")
     random.seed()
@@ -306,51 +334,11 @@ if __name__ == '__main__':
     max_length = 0
 
     start = time.perf_counter()
-    with open('../data/fechas_train.csv', "w") as wf:
-        wf.write('fecha,fi\n')
-        for _ in range(ntrain):
-            nmodo = random.randint(0, 1E10)
 
-            if nmodo % 7 == 0:
-                fecha, fi = genfecharand()
-            elif nmodo % 7 == 1:
-                fecha, fi = genfecharandi()
-            elif nmodo % 7 == 2:
-                fecha, fi = genfecharand2()
-            elif nmodo % 7 == 3:
-                fecha, fi = genfecharand3()
-            elif nmodo % 7 == 4:
-                fecha, fi = genfecharand4()
-            elif nmodo % 7 == 5:
-                fecha, fi = genfecharand5()
-            elif nmodo % 7 == 6:
-                fecha, fi = genfecharand6()
+    max_ntrain = guardaarchivo('../data/fechas_train.csv', ntrain)
+    max_ntest = guardaarchivo('../data/fechas_test.csv', ntest)
 
-            wf.write(f'"{fecha}","{fi}"\n')
-            max_length = max(max_length, len(fecha))
-
-    with open('../data/fechas_test.csv', "w") as wf:
-        wf.write('fecha,fi\n')
-        for _ in range(ntest):
-            nmodo = random.randint(0, 1E10)
-
-            if nmodo % 7 == 0:
-                fecha, fi = genfecharand()
-            elif nmodo % 7 == 1:
-                fecha, fi = genfecharandi()
-            elif nmodo % 7 == 2:
-                fecha, fi = genfecharand2()
-            elif nmodo % 7 == 3:
-                fecha, fi = genfecharand3()
-            elif nmodo % 7 == 4:
-                fecha, fi = genfecharand4()
-            elif nmodo % 7 == 5:
-                fecha, fi = genfecharand5()
-            elif nmodo % 7 == 6:
-                fecha, fi = genfecharand6()
-
-            wf.write(f'"{fecha}","{fi}"\n')
-            max_length = max(max_length, len(fecha))
+    max_length = max(max_ntrain, max_ntest)
 
     print(f'Maxima longitud caracteres {max_length}')
     print(f'Termino en {round(time.perf_counter() - start, 2)} segundos')
