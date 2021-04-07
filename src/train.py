@@ -226,5 +226,7 @@ if __name__ == "__main__":
 
     evaluador.evaluateAndShowAttention("01/06/20", vocabulario, encoder1, attn_decoder1)
 
+    evaluador.evaluateAndShowAttention("04/04/21", vocabulario, encoder1, attn_decoder1)
+
     # rese = evaluador.evaluatotal('../data/fechas_test.csv', encoder1, attn_decoder1, vocabulario)
     # print(f'Porcentaje de aciertos: {rese}%')
