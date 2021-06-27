@@ -51,7 +51,7 @@ def evaluate(encoder, decoder, sentence, vocabulario, max_length=MAX_LENGTH):
                 decoded_words.append('<EOS>')
                 break
             else:
-                decoded_words.append(vocabulario.itos[topi.item()])
+                decoded_words.append(vocabulario.get_itos()[topi.item()])
 
             decoder_input = topi.squeeze().detach()
 
@@ -134,6 +134,8 @@ def evaluatotal(archivo_csv, encoder, decoder, vocabulario, max_length=MAX_LENGT
             decoded_words = []
             decoder_attentions = torch.zeros(max_length, max_length)
 
+            list_itos = vocabulario.get_itos()
+
             lista_topi = []
             for di in range(max_length):
                 decoder_output, decoder_hidden, decoder_attention = decoder(
@@ -141,11 +143,12 @@ def evaluatotal(archivo_csv, encoder, decoder, vocabulario, max_length=MAX_LENGT
                 decoder_attentions[di] = decoder_attention.data
                 topv, topi = decoder_output.data.topk(1)
                 lista_topi.append(topi.item())
+
                 if topi.item() == EOS_token:
                     decoded_words.append('<EOS>')
                     break
                 else:
-                    decoded_words.append(vocabulario.itos[topi.item()])
+                    decoded_words.append(list_itos[topi.item()])
 
                 decoder_input = topi.squeeze().detach()
 

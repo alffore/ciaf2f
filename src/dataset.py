@@ -19,7 +19,8 @@ def recuperaVocabP(archivo_csv='../data/fechas_train.csv'):
     if path.exists(NOM_ARCH_VOC):
         with open(NOM_ARCH_VOC, "rb") as file:
             coleccion = pickle.load(file)
-            return vocab.Vocab(coleccion, min_freq=1, specials=('<sos>', '<eos>', '<unk>'))
+            # return vocab.Vocab(coleccion, min_freq=1, specials=('<sos>', '<eos>', '<unk>'))
+            return vocab.build_vocab_from_iterator(coleccion, min_freq=1, specials=('<sos>', '<eos>', '<unk>'))
 
     return recuperaVocab(archivo_csv)
 
@@ -70,7 +71,8 @@ def recuperaDatosVocab(archivo_csv):
     with open(NOM_ARCH_VOC, "wb") as file:
         pickle.dump(coleccion, file)
 
-    return pairs, vocab.Vocab(coleccion, min_freq=1, specials=('<sos>', '<eos>', '<unk>'))
+    # return pairs, vocab.Vocab(coleccion, min_freq=1, specials=('<sos>', '<eos>', '<unk>'))
+    return pairs, vocab.build_vocab_from_iterator(coleccion, min_freq=1, specials=('<sos>', '<eos>', '<unk>'))
 
 
 def data_process_single(sfecha, vocab):
@@ -93,7 +95,8 @@ def indexFromSentence(vocabulario, sentence):
     for i in range(len(str(sentence))):
         toklist.append(sentence[i])
     toklist.append('<eos>')
-    return [vocabulario[token] for token in toklist]
+    dic = vocabulario.get_stoi()
+    return [dic[token] for token in toklist]
 
 
 def tensorFromSentence(vocabulario, sentence):

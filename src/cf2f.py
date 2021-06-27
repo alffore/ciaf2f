@@ -28,9 +28,9 @@ if __name__ == '__main__':
     vocabulario = ds.recuperaVocabP()
 
     print('Construye modelo ...')
-    encoder1 = enc.EncoderRNN(len(vocabulario.itos), hidden_size).to(device)
+    encoder1 = enc.EncoderRNN(len(vocabulario), hidden_size).to(device)
 
-    attn_decoder1 = dec.AttnDecoderRNN(hidden_size, len(vocabulario.itos)).to(device)
+    attn_decoder1 = dec.AttnDecoderRNN(hidden_size, len(vocabulario)).to(device)
 
     if path.exists(NOM_ARCH_ENCODER):
         checkpoint = torch.load(NOM_ARCH_ENCODER)
