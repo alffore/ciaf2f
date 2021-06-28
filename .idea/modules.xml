@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/ciaf2f.iml" filepath="$PROJECT_DIR$/.idea/ciaf2f.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../renic/renic.git/utiles/espacios_independientes/clasificador2/.idea/clasificador2.iml" filepath="$PROJECT_DIR$/../renic/renic.git/utiles/espacios_independientes/clasificador2/.idea/clasificador2.iml" />
     </modules>
   </component>
 </project>
