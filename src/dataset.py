@@ -49,7 +49,7 @@ def recuperaVocab(archivo_csv):
     return vocab.Vocab(coleccion, min_freq=1, specials=('<sos>', '<eos>', '<unk>'))
 
 
-def recuperaDatosVocab(archivo_csv):
+def recuperadatosvocab(archivo_csv):
     """
     Recupera datos y vocabulario
     :param archivo_csv:

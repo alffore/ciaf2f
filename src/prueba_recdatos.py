@@ -4,7 +4,7 @@ import random
 
 start = time.perf_counter()
 
-pairs, v = ds.recuperaDatosVocab('../data/fechas_train.csv')
+pairs, v = ds.recuperadatosvocab('../data/fechas_train.csv')
 print(v.itos)
 print(f'cantidad de simbolos: {len(v.itos)}')
 print(dict(v.stoi))

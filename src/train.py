@@ -196,7 +196,7 @@ def load_checkpoint(filename, model, optimizer):
 
 if __name__ == "__main__":
     print("Recupera datos, genera vocabulario ...")
-    pairs, vocabulario = ds.recuperaDatosVocab('../data/fechas_train.csv')
+    pairs, vocabulario = ds.recuperadatosvocab('../data/fechas_train.csv')
 
     print('Carga modelos ...')
     # encoder1 = enc.EncoderRNN(len(vocabulario.get_itos), hidden_size).to(device)
