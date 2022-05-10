@@ -10,9 +10,6 @@ lmesesi = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'augu
            'december']
 lmesesi_reducido = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
 
-# lmesesi = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre',
-#            'noviembre', 'diciembre']
-# lmesesi_reducido = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
 
 a_min = 1200
 a_max = 7500
